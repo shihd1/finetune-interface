@@ -1,0 +1,21 @@
+{
+    "questions": [
+      "What troubleshooting steps should I take if my centrifugal pump is experiencing low flow?",
+      "What troubleshooting steps should I take if my centrifugal pump is experiencing low discharge pressure?",
+      "What troubleshooting steps should I take if my centrifugal pump is experiencing high discharge pressure?",
+      "What troubleshooting steps should I take if my centrifugal pump is experiencing erratic discharge pressure?",
+      "What troubleshooting steps should I take if my centrifugal pump is experiencing erratic flow?",
+      "What troubleshooting steps should I take if my centrifugal pump is experiencing high vibration?",
+      "What troubleshooting steps should I take if my centrifugal pump is making a funny noise?",
+      "What troubleshooting steps should I take if my centrifugal pump is cavitating?",
+      "What is the proper startup procedure for a centrifugal pump?",
+      "What is the proper procedure for swapping online and spare pumps?",
+      "What should I do if I'm having trouble starting my centrifugal pump?",
+      "What should I do to properly prime a pump that keeps losing suction?"
+    ],
+    "prompts": [
+      "Determine what actions can be taken to check the pump, then decide on an order to present to the intern starting from the easiest things to check which can narrow down the possibilities. Talk them through what can be eliminated by checking what and also give them a step by step guideline on actions to take. Give them a short list of the most relevant actions. Remember that they are a process engineer so they cannot take the pump apart to see what's wrong inside.",
+      "Determine what actions can be taken to check the pump, then decide on an order to present to the intern starting from the easiest things to check which can narrow down the possibilities. Assume that the pump has been operating for a very long time at a plant and hence has a lot of measuring equipment to detect other metrics that can be used to diagnose the issue. Ask to check for these values if necessary. Talk them through what can be eliminated by checking what and also give them a step by step guideline on actions to take. Give them a short list of the most relevant actions. Remember that they are a process engineer so they cannot take the pump apart to see what's wrong inside.",
+      "Determine what actions can be taken to check the pump, then decide on an order to present to the intern starting from the easiest things to check which can narrow down the possibilities. Assume that the pump has been operating for a very long time at a plant and hence has metrics that can be used to diagnose the issue. Ask to check for these values if necessary. Pretend you are a doctor, so only ask them to do a couple of things to narrow down the possibilities. Remember that they are a process engineer so they cannot take the pump apart to see what's wrong inside."
+    ]
+}
