@@ -1,12 +1,11 @@
 import os
 import openai
-from dotenv import load_dotenv
+import streamlit as st
 
 class GPTAssistant:
     def __init__(self, deployment):
-        load_dotenv(override=True)
-        self.endpoint = os.environ.get("OPENAI_URL")
-        self.api_key = os.environ.get("OPEN_AI_KEY")
+        self.endpoint = st.secrets["OPENAI_URL"]
+        self.api_key = st.secrets["OPEN_AI_KEY"]
         self.deployment = deployment
         self.client = openai.AzureOpenAI(
             azure_endpoint=self.endpoint,
