@@ -29,7 +29,7 @@ if select_question and select_question != st.session_state.selected_question:
     complete_prompts = [select_question] + [select_question + " " + prompt for prompt in prompts]
     answers = []
 
-    model = st.secrets["OPENAI_DEPLOY"]
+    model = os.environ.get("OPENAI_DEPLOY")
     helper = GPTAssistant(deployment = model)
     with st.spinner("Loading Example Answers"):
         for cp in complete_prompts:
