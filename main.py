@@ -44,27 +44,10 @@ if select_question and select_question != st.session_state.selected_question:
 answer = st.text_area("Type your response here", height=500)
 
 # Submit
-if answer:
+submitted = st.button("Submit")
+if submitted or answer:
     output = f"Answer submitted! You wrote {len(answer)} characters"
     st.write(output)
-    # Do the saving to json file
-    file_name = select_question[:-1]+'.json'
-    if os.path.exists(file_name):
-        with open(file_name, 'r') as file:
-            data = json.load(file)
-            data['answer'].append(answer)
-    else:
-        data = {}
-        data['question'] = select_question
-        data['answer'] = [answer]
-    
-    with open(file_name, 'w') as file:
-        json.dump(data, file, indent=4)
-
-# Submit
-submitted = st.button("Submit")
-if submitted:
-    st.write("Answer submitted!")
     # Do the saving to json file
     file_name = select_question[:-1]+'.json'
     if os.path.exists(file_name):
