@@ -21,9 +21,10 @@ class GPTAssistant:
                     You are a process engineer assistant who is experienced with working at a chemical plant.
                 """},
                 {"role": "user", "content": prompt}
-            ]
+            ],
+            stream=True,
         )
-        return response.choices[0].message.content
+        return response
     
 # if __name__ == "__main__":
     # load_dotenv()

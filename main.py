@@ -20,7 +20,7 @@ st.header("Fine-Tuning Answer User Survey")
 
 # Question
 questions = st.session_state.questions
-select_question = st.selectbox("Select a question to answer", options=questions, index=None)
+select_question = st.selectbox("Select a question to answer", options=questions, index=None, key='selection')
 
 if select_question == "Create your own":
     with st.form('question'):
@@ -31,32 +31,30 @@ if st.button("Refresh Answers"):
     st.rerun()
 
 if select_question:
-    with st.form("my_form"):
+    with st.form("my_form", clear_on_submit=True):
         complete_prompts = [select_question] + [select_question + " " + prompt for prompt in st.session_state.extra_instructions]
-        answers = []
 
         model = st.secrets["OPENAI_DEPLOY"]
         helper = GPTAssistant(deployment = model)
         index = 0
         size = len(complete_prompts)
-        for index, cp in enumerate(complete_prompts, start=1):
-            progress = f"Loading Example Answers: {(index * 100) // len(complete_prompts)}% Complete"
-            with st.spinner(progress):
-                try:
-                    answers.append(helper.answer_gpt(cp))
-                except Exception as e:
-                    st.write("Enter another question. The one you entered was invalid.")
-                    st.rerun()
-
-        if answers:
-            columns = st.columns(len(answers))
-            for i in range(0, len(columns)):
-                columns[i].header(f"Answer {i+1:02}")
-                columns[i].write(answers[i])
+        columns = st.columns(len(complete_prompts))
+        for index, cp in enumerate(complete_prompts):
+            # progress = f"Loading Example Answers: {index-1}/{len(complete_prompts)} Complete"
+            # with st.spinner(progress):
+            try:
+                columns[index].header(f"Answer {index+1:02}")
+                columns[index].write_stream(helper.answer_gpt(cp))
+            except Exception as e:
+                st.write("Enter another question. The one you entered was invalid.")
+                st.rerun()
 
         new_response = st.text_area("Type your response here", height=500)
 
-        submitted = st.form_submit_button("Submit")
+        def reset():
+            st.session_state.selection = None
+
+        submitted = st.form_submit_button("Submit", on_click=reset)
 
         if submitted:
             url = 'https://nhanfdvbgpgcxrqcjful.supabase.co'
@@ -70,3 +68,4 @@ if select_question:
             )
 
             st.write(f"Answer submitted! You wrote {len(new_response)} characters")
+            
