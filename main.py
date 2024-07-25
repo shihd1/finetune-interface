@@ -13,6 +13,8 @@ if 'questions' not in st.session_state:
         data['questions'].append('Create your own')
         st.session_state.questions = data['questions']
         st.session_state.extra_instructions = data['prompts']
+if 'answer' not in st.session_state:
+    st.session_state.answer=' '
 
 # Page Header Title
 st.set_page_config(page_title="Fine-Tuning Survey", layout="wide")
@@ -49,23 +51,21 @@ if select_question:
                 st.write("Enter another question. The one you entered was invalid.")
                 st.rerun()
 
-        new_response = st.text_area("Type your response here", height=500)
+        new_response = st.text_area("Type your response here", height=500, key='answer')
 
         def reset():
-            st.session_state.selection = None
-
-        submitted = st.form_submit_button("Submit", on_click=reset)
-
-        if submitted:
             url = 'https://nhanfdvbgpgcxrqcjful.supabase.co'
             key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5oYW5mZHZiZ3BnY3hycWNqZnVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE3NTg1OTksImV4cCI6MjAzNzMzNDU5OX0.dkDZKZvw6deIu-i-yC4TYbeK-ASlEX5fMiYyKy1VmWY'
             supabase = create_client(url, key)
             
+            answer = st.session_state.answer
+
             response = (
                 supabase.table("qa-pairs")
-                .insert({"id": int(time.time() * 1000), "question": select_question, "answer": new_response})
+                .insert({"id": int(time.time() * 1000), "question": select_question, "answer": answer})
                 .execute()
             )
 
-            st.write(f"Answer submitted! You wrote {len(new_response)} characters")
-            
+            st.session_state.selection = None
+
+        submitted = st.form_submit_button("Submit", on_click=reset)
